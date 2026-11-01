@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>J.E.G Technologies | Technology that makes money simple</title>
-  <meta name="description" content="J.E.G Technologies, a division of Emedom Industries Limited, builds AI CFO for small businesses and Capital Market Guide for new investors in Nigeria.">
+  <meta name="description" content="J.E.G Technologies, a division of Emedom Industries Limited, builds AI CFO for small businesses and Capital Market Guide for new investors, for people everywhere.">
   <meta name="theme-color" content="#06352A">
   <meta property="og:title" content="J.E.G Technologies — technology that makes money simple">
   <meta property="og:description" content="AI CFO keeps your books. Capital Market Guide teaches investing in plain English.">
@@ -242,6 +242,23 @@ p{margin:0}
 .badges span{background:#fff;border:1px solid var(--rule-soft);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700}
 .b.dark .badges span,.b.green .badges span{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2)}
 
+
+/* product groups */
+.grp{margin-top:clamp(28px,4vw,48px)}
+.grp-h{display:flex;align-items:center;gap:14px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.grp-h small{display:block;font-size:13.5px;font-weight:700;color:var(--slate)}
+.grp-h h3{font-size:clamp(26px,3vw,34px)}
+.grp-h .arrowlink{margin-left:auto}
+.grp-ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;flex:none}
+.grp-ic img{width:30px;height:30px}
+.grp-ic.cfo{background:var(--navy)}.grp-ic.cmg{background:var(--emerald-dark)}
+.arrowlink{font-weight:700;text-decoration:none;display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
+.arrowlink:hover{color:var(--emerald-dark)}
+.b .tag{position:absolute;top:22px;right:22px;font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;background:var(--ivory);color:var(--slate)}
+.b.dark .tag,.b.green .tag{background:rgba(255,255,255,.14);color:#fff}
+.b.sun .tag{background:#fff}
+.bento{grid-auto-rows:minmax(190px,auto)}
+
 /* stats */
 .stats{background:var(--deep);color:#fff;position:relative;overflow:hidden}
 .stats::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 80% at 80% 0%,rgba(43,196,143,.25),transparent 60%)}
@@ -353,13 +370,13 @@ footer{background:var(--navy);color:#B5C3D0;font-size:15px}
   <header class="nav" id="nav">
     <div class="wrap">
       <a class="lockup" href="/"><img src="img/mark.svg" alt="" width="38" height="38"><span><b>J.E.G Technologies</b><small>A division of Emedom Industries Limited</small></span></a>
-      <nav class="links" aria-label="Main"><a href="#products">Products</a><a href="#how">How it works</a><a href="#about">About</a><a href="#faq">FAQ</a><a class="btn" href="#products">Get started <span class="chev">»</span></a></nav>
+      <nav class="links" aria-label="Main"><a href="#products">Products</a><a href="#inside">What's inside</a><a href="#about">About</a><a href="#faq">FAQ</a><a class="btn" href="#products">Get started <span class="chev">»</span></a></nav>
       <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span></button>
     </div>
   </header>
   <div class="sheet" id="sheet" aria-hidden="true">
     <div class="sheet-top"><a class="lockup" href="/"><img src="img/mark-reverse.svg" alt="" width="38" height="38"><span><b>J.E.G Technologies</b></span></a><button class="sheet-close" id="sheetClose" aria-label="Close menu">×</button></div>
-    <nav><a href="#products">Products</a><a href="#how">How it works</a><a href="#about">About</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav>
+    <nav><a href="#products">Products</a><a href="#inside">What's inside</a><a href="#about">About</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav>
     <a class="btn btn-em" href="https://wa.me/2349162771042">Chat on WhatsApp</a>
   </div>
 
@@ -368,15 +385,15 @@ footer{background:var(--navy);color:#B5C3D0;font-size:15px}
     <section class="hero">
       <div class="glow"></div>
       <div class="wrap">
-        <span class="pill glass"><span class="dot"></span>Two products live · Built in Port Harcourt</span>
+        <span class="pill glass"><span class="dot"></span>Two products · Made for people everywhere</span>
         <h1>Technology that makes money <em>simple<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14 C 80 4, 200 4, 296 12" fill="none" stroke="#2BC48F" stroke-width="5" stroke-linecap="round" pathLength="1"/></svg></em></h1>
         <p class="lead">We build tools that keep your business books for you, and teach you how investing works, in plain English.</p>
-        <div class="ctas"><a class="btn btn-em" href="#products">Explore our products <span class="chev">»</span></a><a class="btn btn-ghost" href="#how">See how it works</a></div>
-        <div class="hero-meta"><span><i>✓</i>Works on WhatsApp</span><span><i>✓</i>Plain English, no jargon</span><span><i>✓</i>We never sell your data</span></div>
+        <div class="ctas"><a class="btn btn-em" href="#products">Explore our products <span class="chev">»</span></a><a class="btn btn-ghost" href="#inside">See what's inside</a></div>
+        <div class="hero-meta"><span><i>✓</i>Works on WhatsApp</span><span><i>✓</i>Any country, any currency</span><span><i>✓</i>We never sell your data</span></div>
 
         <div class="devices" aria-hidden="true">
           <div class="float f1"><span class="ic" style="background:var(--gain-soft)">🧾</span><div><b>Receipt read</b><span>Expense saved · ₦18,500</span></div></div>
-          <div class="float f2"><span class="ic" style="background:var(--sun-soft)">🏆</span><div><b>Lesson complete</b><span>+30 points</span></div></div>
+          <div class="float f2"><span class="ic" style="background:var(--sun-soft)">🌍</span><div><b>Any currency</b><span>₦ · $ · € · £ · KSh · ₵</span></div></div>
           <div class="laptop">
             <div class="lid"><div class="lid-in"><span class="cam"></span>
               <div class="app">
@@ -404,33 +421,32 @@ footer{background:var(--navy);color:#B5C3D0;font-size:15px}
             <div class="ps"><small>Good morning,</small><h6>Goodnews</h6>
               <div class="card"><small>Capital Market Guide · Level 1</small><b>Why companies sell shares</b><div class="bar"><i></i></div></div>
               <div class="row"><div class="t"><i style="background:var(--gain-soft)"></i>Lessons</div><div class="t"><i style="background:#E3E9EF"></i>Games</div></div>
-              <div class="t" style="display:flex;justify-content:space-between"><span>NGX All-Share</span><span style="color:var(--emerald-dark)">▲</span></div>
+              <div class="t" style="display:flex;justify-content:space-between"><span>Market today</span><span style="color:var(--emerald-dark)">▲</span></div>
             </div></div></div>
         </div>
       </div>
     </section>
 
     <div class="marq" aria-hidden="true"><div class="marq-in" id="marq">
-      <span>Record sales by text or voice</span><span>Snap a receipt</span><span>Upload bank, POS or mobile-money statements</span><span>Profit for any week, month or year</span><span>PDF statements for loans and grants</span><span>46 plain-English lessons</span><span>4 mini games</span><span>Daily NGX recap</span><span>Built for Nigeria</span>
+      <span>Record sales by text or voice</span><span>Snap a receipt</span><span>Upload bank, POS or mobile-money statements</span><span>Profit for any week, month or year</span><span>PDF statements for loans and grants</span><span>46 plain-English lessons</span><span>4 mini games</span><span>Daily market recap</span><span>Any country, any currency</span>
     </div></div>
 
     <!-- PRODUCTS -->
     <section class="sec" id="products">
       <div class="wrap">
-        <div class="sec-h reveal"><span class="pill soft">Our products</span><h2>Two tools. <em>One mission.</em></h2><p>Help Nigerians understand and grow their money, whether they run a business or are just starting to invest.</p></div>
+        <div class="sec-h reveal"><span class="pill soft">Our products</span><h2>Two tools. <em>One mission.</em></h2><p>Help people understand and grow their money, whether they run a business or are just starting to invest.</p></div>
         <div class="tabs reveal"><div class="tabs-in" role="tablist"><span class="tab-ind" id="ind"></span><button class="tab on" role="tab" data-t="cfo" aria-selected="true">AI CFO</button><button class="tab" role="tab" data-t="cmg" aria-selected="false">Capital Market Guide</button></div></div>
 
         <div class="panel on reveal" id="p-cfo" role="tabpanel">
           <div>
             <span class="who">● For small businesses</span>
             <h3>Your books, kept <em>for you.</em></h3>
-            <p class="big">Tell AI CFO what you sold or spent, in your own words. It records it, works out your profit and answers questions about your money, on the web or on WhatsApp.</p>
+            <p class="big">An AI bookkeeper for small businesses anywhere in the world. Tell it what you sold or spent, in your own words, and it keeps your records and works out your profit, in your own currency.</p>
             <ul class="feat">
-              <li><i>💬</i><div><b>Record it your way</b><span>Type it, say it, snap a receipt or upload a statement.</span></div></li>
-              <li><i>✅</i><div><b>You stay in control</b><span>The AI only drafts records. You check them and press save.</span></div></li>
-              <li><i>📄</i><div><b>Loan-ready statements</b><span>Branded PDF statements and Excel files for bank, BOI and grant applications.</span></div></li>
+              <li><i>💬</i><div><b>Web and WhatsApp</b><span>Type, speak, snap a receipt or upload a statement.</span></div></li>
+              <li><i>🌍</i><div><b>Any country, any currency</b><span>Built to work wherever your business is.</span></div></li>
             </ul>
-            <a class="btn" href="https://aicfo.jegtech.com.ng">Visit AI CFO <span class="chev">»</span></a>
+            <a class="btn" href="https://aicfo.jegtech.com.ng">Learn more on the AI CFO site <span class="chev">»</span></a>
           </div>
           <div class="panel-art navy">
             <div class="chat" id="chat">
@@ -444,11 +460,11 @@ footer{background:var(--navy);color:#B5C3D0;font-size:15px}
           <div>
             <span class="who">● For new investors · Free</span>
             <h3>The stock market, <em>made simple.</em></h3>
-            <p class="big">Short, friendly lessons and fun games that take complete beginners from “what is a share?” to understanding the Nigerian Exchange.</p>
+            <p class="big">Short, friendly lessons and fun games that take complete beginners from “what is a share?” to understanding how the stock market works.</p>
             <ul class="feat">
               <li><i>📚</i><div><b>46 bite-size lessons</b><span>Three levels, Starter to Pro, with a quick quiz after each one.</span></div></li>
               <li><i>🎮</i><div><b>4 mini games</b><span>Up or Down?, Word Match, Spot the Scam and My First Basket.</span></div></li>
-              <li><i>📈</i><div><b>The real market, simply</b><span>A daily look at the NGX, explained for beginners.</span></div></li>
+              <li><i>📈</i><div><b>The real market, simply</b><span>A daily market recap, explained for beginners.</span></div></li>
             </ul>
             <a class="btn btn-em" href="/learn/">Start learning free <span class="chev">»</span></a>
           </div>
@@ -463,39 +479,31 @@ footer{background:var(--navy);color:#B5C3D0;font-size:15px}
       </div>
     </section>
 
-    <!-- HOW -->
-    <section class="sec" id="how" style="padding-top:0">
+    <!-- WHAT'S INSIDE, by product -->
+    <section class="sec" id="inside" style="padding-top:0">
       <div class="wrap">
-        <div class="sec-h reveal"><span class="pill soft">How AI CFO works</span><h2>Three steps to <em>clean books.</em></h2><p>No accounting knowledge needed. If you can send a message, you can use AI CFO.</p></div>
-        <div class="steps">
-          <div class="step reveal d1"><div class="n">01</div><h3>Tell it what happened</h3><p>“Sold 5 crates of drinks 32k.” Send it the way you would tell a friend.</p><div class="ways"><span>⌨️ Type</span><span>🎙️ Say</span><span>📷 Snap</span><span>📎 Upload</span></div></div>
-          <div class="step reveal d2"><div class="n">02</div><h3>Check and save</h3><p>AI CFO drafts the records. Doubtful or duplicate rows are flagged, and nothing is saved until you press save.</p><div class="ways"><span>Review screen</span><span>Edit anytime</span></div></div>
-          <div class="step reveal d3"><div class="n">03</div><h3>Know your numbers</h3><p>See your profit, money in and out, and spending by category, then download a statement when the bank asks.</p><div class="ways"><span>Dashboard</span><span>PDF</span><span>Excel</span></div></div>
-        </div>
-      </div>
-    </section>
+        <div class="sec-h reveal"><span class="pill soft">What's inside</span><h2>Everything you need, <em>product by product.</em></h2></div>
 
-    <!-- BENTO -->
-    <section class="sec" style="padding-top:0">
-      <div class="wrap">
-        <div class="sec-h reveal"><span class="pill soft">Everything inside</span><h2>Built for how <em>Nigerians</em> really work.</h2></div>
-        <div class="bento">
-          <div class="b dark c4 r2 reveal" data-glow>
-            <span class="ico">🗂️</span>
-            <h3>Four ways to add a record</h3>
-            <p>Every business is different. Use whichever is easiest: a quick form, your voice, a photo of a receipt, or a whole bank, POS or mobile-money statement as PDF, CSV or Excel.</p>
-            <div class="mini-ways"><div><span>⌨️</span>Type it</div><div><span>🎙️</span>Say it</div><div><span>🧾</span>Snap it</div><div><span>🏦</span>Upload it</div></div>
+        <div class="grp reveal">
+          <div class="grp-h"><span class="grp-ic cfo"><img src="img/mark-reverse.svg" alt=""></span><div><small>For small businesses</small><h3>AI CFO</h3></div><a class="arrowlink" href="https://aicfo.jegtech.com.ng">Visit site <span>→</span></a></div>
+          <div class="bento">
+            <div class="b dark c3" data-glow><span class="tag">AI CFO</span><span class="ico">🗂️</span><h3>Record it your way</h3><p>Type it, say it, snap a receipt or upload a bank or mobile-money statement.</p></div>
+            <div class="b c3" data-glow><span class="tag">AI CFO</span><span class="ico">🌍</span><h3>Any country, any currency</h3><p>Keep your books in the currency you trade in, wherever your business is.</p><div class="badges"><span>₦</span><span>$</span><span>€</span><span>£</span><span>KSh</span><span>₵</span><span>R</span></div></div>
+            <div class="b c2" data-glow><span class="tag">AI CFO</span><span class="ico">💬</span><h3>Web and WhatsApp</h3><p>Use the app you already have open all day.</p></div>
+            <div class="b c2" data-glow><span class="tag">AI CFO</span><span class="ico">📄</span><h3>Bank-ready statements</h3><p>PDF and Excel statements for loans and grants.</p></div>
+            <div class="b c2" data-glow><span class="tag">AI CFO</span><span class="ico">🛡️</span><h3>You stay in control</h3><p>Nothing is saved until you check it.</p></div>
           </div>
-          <div class="b green c2 reveal d1" data-glow><span class="ico">💬</span><h3>Works on WhatsApp</h3><p>Send sales and questions straight from the app you already use every day.</p></div>
-          <div class="b c2 reveal d2" data-glow><span class="ico">🔐</span><h3>No passwords</h3><p>Sign in to AI CFO with a 6-digit code sent to your email or WhatsApp.</p></div>
-          <div class="b sun c2 reveal" data-glow>
-            <span class="ico" style="background:#fff">📄</span><h3>Statements banks accept</h3>
-            <div class="doc"><b>Statement of account</b><div><span>Money in</span><span>₦1,920,000</span></div><div><span>Money out</span><span>₦1,433,800</span></div><div><span>Profit</span><span style="color:var(--emerald-dark);font-weight:700">₦486,200</span></div></div>
+        </div>
+
+        <div class="grp reveal">
+          <div class="grp-h"><span class="grp-ic cmg"><img src="img/mark-reverse.svg" alt=""></span><div><small>For new investors · Free</small><h3>Capital Market Guide</h3></div><a class="arrowlink" href="/learn/">Start learning <span>→</span></a></div>
+          <div class="bento">
+            <div class="b green c3" data-glow><span class="tag">Capital Market Guide</span><span class="ico">📚</span><h3>46 bite-size lessons</h3><p>Three levels, Starter to Pro, in plain English, with a quick quiz after each one.</p><div class="badges"><span>Starter</span><span>Explorer</span><span>Pro</span></div></div>
+            <div class="b c3" data-glow><span class="tag">Capital Market Guide</span><span class="ico">🎮</span><h3>4 mini games</h3><p>Guess price moves, match market words, spot scams and build a pretend basket, with no real money at risk.</p></div>
+            <div class="b c2" data-glow><span class="tag">Capital Market Guide</span><span class="ico">📈</span><h3>Daily market recap</h3><p>What moved and why, explained simply.</p></div>
+            <div class="b c2" data-glow><span class="tag">Capital Market Guide</span><span class="ico">🏆</span><h3>Points and progress</h3><p>Earn points and pick up on any device.</p></div>
+            <div class="b sun c2" data-glow><span class="tag">Capital Market Guide</span><span class="ico" style="background:#fff">🆓</span><h3>Free, always</h3><p>No money needed to learn.</p></div>
           </div>
-          <div class="b c2 reveal d1" data-glow><span class="ico">🧠</span><h3>The code does the maths</h3><p>The AI reads your messages. The totals are calculated by the system from your own records, never guessed.</p></div>
-          <div class="b c2 reveal d2" data-glow><span class="ico">🛡️</span><h3>Your data stays yours</h3><p>Uploaded files are not stored. Download your records or delete your account any time.</p></div>
-          <div class="b green c3 reveal" data-glow><span class="ico">🎓</span><h3>Learn investing, free</h3><p>Capital Market Guide: 46 lessons across Starter, Explorer and Pro levels, in plain English.</p><div class="badges"><span>Quizzes</span><span>Points</span><span>Progress on any device</span></div></div>
-          <div class="b dark c3 reveal d1" data-glow><span class="ico">🎮</span><h3>Practise with games</h3><p>Guess price moves, match market words, spot scams and build a pretend basket of companies, with no real money at risk.</p><div class="badges"><span>Up or Down?</span><span>Spot the Scam</span><span>My First Basket</span></div></div>
         </div>
       </div>
     </section>
@@ -504,7 +512,7 @@ footer{background:var(--navy);color:#B5C3D0;font-size:15px}
     <section class="stats">
       <div class="wrap">
         <div class="stat reveal"><b data-count="2">0</b><span>products live today</span></div>
-        <div class="stat reveal d1"><b data-count="4">0</b><span>ways to record a sale or expense</span></div>
+        <div class="stat reveal d1"><b data-count="4">0</b><span>mini games to practise investing</span></div>
         <div class="stat reveal d2"><b data-count="46">0</b><span>free lessons on the stock market</span></div>
         <div class="stat reveal d3"><b>₦<span data-count="0">0</span></b><span>to start learning, always</span></div>
       </div>
@@ -529,14 +537,14 @@ footer{background:var(--navy);color:#B5C3D0;font-size:15px}
         <div class="story-art reveal" aria-hidden="true">
           <span class="ring" style="width:260px;height:260px"></span><span class="ring" style="width:400px;height:400px"></span><span class="ring" style="width:560px;height:560px"></span>
           <div class="mark"><img src="img/mark-reverse.svg" alt=""></div>
-          <div class="tagloc"><span>📍 Port Harcourt, Rivers State</span><span>A division of Emedom Industries</span></div>
+          <div class="tagloc"><span>J.E.G Technologies</span><span>A division of Emedom Industries</span></div>
         </div>
         <div class="reveal d1">
           <span class="pill soft">Who we are</span>
-          <h2>Built in Nigeria, <em>for Nigeria.</em></h2>
-          <p>J.E.G Technologies is the technology division of Emedom Industries Limited. We build simple, honest software for the everyday money problems Nigerians face: keeping proper records and understanding how to invest.</p>
+          <h2>Simple money tools, <em>for everyone.</em></h2>
+          <p>J.E.G Technologies is the technology division of Emedom Industries Limited. We build simple, honest software for two everyday money problems people face everywhere: keeping proper records and understanding how to invest.</p>
           <div class="tree">
-            <div><i style="background:var(--navy)">E</i><div><b>Emedom Industries Limited</b><span>Parent company · Port Harcourt</span></div></div>
+            <div><i style="background:var(--navy)">E</i><div><b>Emedom Industries Limited</b><span>Parent company</span></div></div>
             <div style="margin-left:28px"><i style="background:var(--emerald)">J</i><div><b>J.E.G Technologies</b><span>Technology division</span></div></div>
             <div style="margin-left:56px"><i style="background:var(--navy-2)">AI</i><div><b>AI CFO</b><span>Bookkeeping for small businesses</span></div></div>
             <div style="margin-left:56px"><i style="background:#0E8A65">CM</i><div><b>Capital Market Guide</b><span>Investing lessons for beginners</span></div></div>
@@ -550,8 +558,9 @@ footer{background:var(--navy);color:#B5C3D0;font-size:15px}
       <div class="wrap">
         <div class="sec-h reveal"><span class="pill soft">Questions</span><h2>Good to <em>know.</em></h2></div>
         <div class="faq reveal">
-          <div class="q"><button aria-expanded="false">What is J.E.G Technologies?<i>+</i></button><div class="a"><div><p>We are the technology division of Emedom Industries Limited, based in Port Harcourt. We build AI CFO for small businesses and Capital Market Guide for people learning to invest.</p></div></div></div>
+          <div class="q"><button aria-expanded="false">What is J.E.G Technologies?<i>+</i></button><div class="a"><div><p>We are the technology division of Emedom Industries Limited. We build AI CFO for small businesses and Capital Market Guide for people learning to invest.</p></div></div></div>
           <div class="q"><button aria-expanded="false">Do I need accounting knowledge to use AI CFO?<i>+</i></button><div class="a"><div><p>No. You tell it what you sold or spent in your own words, by typing, speaking, snapping a receipt or uploading a statement. It drafts the records for you to check and save.</p></div></div></div>
+          <div class="q"><button aria-expanded="false">Can I use AI CFO in my country?<i>+</i></button><div class="a"><div><p>Yes. AI CFO works in any country and in your own currency. Visit the <a href="https://aicfo.jegtech.com.ng">AI CFO site</a> for details.</p></div></div></div>
           <div class="q"><button aria-expanded="false">Can AI CFO make mistakes with my money figures?<i>+</i></button><div class="a"><div><p>The AI only reads your messages and drafts records. You review them before anything is saved, and the totals are calculated by the system from your saved records, not guessed by the AI.</p></div></div></div>
           <div class="q"><button aria-expanded="false">Is Capital Market Guide free?<i>+</i></button><div class="a"><div><p>Yes. All lessons and games are free. You only need money if you later decide to buy real shares through a licensed stockbroker.</p></div></div></div>
           <div class="q"><button aria-expanded="false">Is Capital Market Guide investment advice?<i>+</i></button><div class="a"><div><p>No. It is for learning only. The games use made-up companies and pretend results. Share prices can go down as well as up.</p></div></div></div>
@@ -574,10 +583,10 @@ footer{background:var(--navy);color:#B5C3D0;font-size:15px}
   <footer>
     <div class="wrap">
       <div class="f-top">
-        <div><a class="lockup" href="/"><img src="img/mark-reverse.svg" alt="" width="38" height="38"><span><b>J.E.G Technologies</b><small>A division of Emedom Industries Limited</small></span></a><p>Technology that makes money simple, for Nigerian businesses and new investors.</p></div>
+        <div><a class="lockup" href="/"><img src="img/mark-reverse.svg" alt="" width="38" height="38"><span><b>J.E.G Technologies</b><small>A division of Emedom Industries Limited</small></span></a><p>Technology that makes money simple, for businesses and new investors everywhere.</p></div>
         <div><h4>Products</h4><a href="https://aicfo.jegtech.com.ng">AI CFO</a><a href="/learn/">Capital Market Guide</a><a href="/learn/#/join">Mini games</a></div>
-        <div><h4>Company</h4><a href="#about">What we stand for</a><a href="#how">How it works</a><a href="#faq">FAQ</a><a href="https://aicfo.jegtech.com.ng/privacy">Privacy notice</a></div>
-        <div><h4>Contact</h4><a href="https://wa.me/2349162771042">WhatsApp: +234 916 277 1042</a><a href="tel:+2349162771042">Call: +234 916 277 1042</a><p style="margin-top:8px">2, Pillar Avenue, Umuebulu 4, Port Harcourt, Rivers State, Nigeria</p></div>
+        <div><h4>Company</h4><a href="#about">What we stand for</a><a href="#inside">What's inside</a><a href="#faq">FAQ</a><a href="https://aicfo.jegtech.com.ng/privacy">Privacy notice</a></div>
+        <div><h4>Contact</h4><a href="https://wa.me/2349162771042">WhatsApp: +234 916 277 1042</a><a href="tel:+2349162771042">Call: +234 916 277 1042</a><p style="margin-top:8px"><b style="color:#fff;font-weight:600">Registered office</b><br>2, Pillar Avenue, Umuebulu 4, Port Harcourt, Rivers State, Nigeria</p></div>
       </div>
       <div class="f-big" aria-hidden="true">J.E.G Tech</div>
       <div class="f-bot"><span>© 2026 Emedom Industries Limited, trading as J.E.G Technologies.</span><span>Capital Market Guide is for learning only, not investment advice.</span></div>
