@@ -15,7 +15,7 @@ const fmt = (n,d=2)=>(n==null||isNaN(n))?"—":Number(n).toLocaleString("en-NG",
 const ls = { get(k){ try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;} }, set(k,v){ try{localStorage.setItem(k,JSON.stringify(v));}catch(e){} } };
 const sleep = ms=>new Promise(r=>setTimeout(r,ms));
 
-const st = { user:null, profile:null, done:{}, cur:0, market:null, isAdmin:false, pending:null, ready:false };
+const st = { user:null, profile:null, done:{}, cur:0, games:{}, market:null, isAdmin:false, pending:null, ready:false };
 const SEED_MARKET = {asOfLabel:"Friday, 23 October 2026", asi:247222.27, asiPrev:244956.94, asiChg:0.92, mcap:"160.52trn", volume:"611.66m", deals:"33,540", value:"—",
   source:"NGX daily trading data as reported by Nairametrics, 23 Oct 2026", note:"Shares closed the week higher, led by Dangote Cement and FirstHoldCo.",
   gainers:[{sym:"DANGCEM",name:"Dangote Cement",price:1111,chg:10},{sym:"FIRSTHOLDCO",name:"First HoldCo",price:144.1,chg:10},{sym:"GUINEAINS",name:"Guinea Insurance",price:0.93,chg:9.41},{sym:"FIDELITYBK",name:"Fidelity Bank",price:24,chg:9.09},{sym:"FTNCOCOA",name:"FTN Cocoa Processors",price:7.92,chg:5.6}],
@@ -29,7 +29,9 @@ const LEVELS = [
 ];
 const lessonsOfLevel = lv => LESSONS.map((l,i)=>lv.mods.includes(l.m)?i:-1).filter(i=>i>=0);
 const levelOfLesson = i => LEVELS.find(lv=>lv.mods.includes(LESSONS[i].m));
-const points = ()=>Object.values(st.done).reduce((a,d)=>a+(d.score||0)*10,0);
+const lessonPoints = ()=>Object.values(st.done).reduce((a,d)=>a+(d.score||0)*10,0);
+const gamePoints = ()=>Object.values(st.games||{}).reduce((a,g)=>a+(g.pts||0),0);
+const points = ()=>lessonPoints()+gamePoints();
 const doneCount = ()=>Object.keys(st.done).length;
 const unlocked = i => i===0 || !!st.done[i-1];
 
@@ -69,7 +71,7 @@ async function render(){
     case "home": return shell("home", viewHome());
     case "learn": return shell("learn", viewLearn());
     case "lesson": return shell("learn", viewLesson(Math.max(0,Math.min(LESSONS.length-1, +arg||0))), ()=>bindLesson(+arg||0));
-    case "play": return shell("play", viewPlay());
+    case "play": return shell("play", viewPlay(arg), ()=>bindPlay(arg));
     case "market": return shell("market", viewMarket(), bindMarket);
     case "help": return shell("help", viewHelp());
     case "learners": return shell("home", `<div id="lrn"><p class="muted">Loading learners…</p></div>`, loadLearners);
@@ -78,8 +80,9 @@ async function render(){
 }
 
 /* ---------- public: landing ---------- */
-function topbar(){ return `<header class="topbar" id="tb"><div class="wrap"><a class="lockup" href="#/">${MARK}<span><b>Capital Market Guide</b><small>by J.E.G Technologies</small></span></a>
-  <nav><a class="txtlink" href="#/signin">Sign in</a><a class="btn btn-sm" href="#/join">Get started</a></nav></div></header>`; }
+function topbar(){ return `<div class="strip"><div class="wrap"><a href="#/join">New: 4 free mini games to practise investing <em>Play now →</em></a></div></div>
+  <header class="topbar" id="tb"><div class="wrap"><a class="lockup" href="#/">${MARK}<span><b>Capital Market Guide</b><small>by J.E.G Technologies</small></span></a>
+  <nav><a class="txtlink" href="#/signin">Sign in</a><a class="btn btn-sm" href="#/join">Get started <span class="chev">»</span></a></nav></div></header>`; }
 const SB_ICONS = `<span class="ic"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx=".8" fill="#0B1F33"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8" fill="#0B1F33"/><rect x="10" y="3" width="3" height="9" rx=".8" fill="#0B1F33"/><rect x="15" y="0" width="3" height="12" rx=".8" fill="#0B1F33"/></svg><svg viewBox="0 0 16 12"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0zM3.4 6.8a6.5 6.5 0 0 1 9.2 0L11.2 8.2a4.5 4.5 0 0 0-6.4 0zM1.2 4.6a9.6 9.6 0 0 1 13.6 0L13.4 6a7.6 7.6 0 0 0-10.8 0z" fill="#0B1F33"/></svg><svg viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="#0B1F33" opacity=".4"/><rect x="2" y="2" width="17" height="9" rx="2" fill="#0B1F33"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="#0B1F33" opacity=".4"/></svg></span>`;
 function phoneScreen(m){
   const up=Number(m.asiChg)>=0, C=2*Math.PI*31;
@@ -102,19 +105,14 @@ function phoneScreen(m){
 function viewLanding(){
   const m=st.market||SEED_MARKET, up=Number(m.asiChg)>=0;
   const appIcon=MARK.replace(/stroke="currentColor"/g,'stroke="#F6F4EE"');
+  const GM=window.CMG_GAMES||{};
   root.innerHTML = `<div class="screen">${topbar()}
   <main>
-    <section class="hero"><div class="wrap hero-grid">
-      <div>
-        <h1>The stock market, <em>made simple.</em></h1>
-        <p class="lead">Short, friendly lessons that take you from “what is a share?” to understanding the Nigerian Exchange. Plain English. At your own pace.</p>
-        <div class="ctas"><a class="btn btn-em" href="#/join">Start learning free</a><a class="arrowlink" href="#/signin">I have an account <span>→</span></a></div>
-        <div class="facts">
-          <div><b>${LESSONS.length}</b><span>bite-size lessons</span></div>
-          <div><b>3</b><span>levels, beginner to pro</span></div>
-          <div><b>₦0</b><span>to learn, always</span></div>
-        </div>
-      </div>
+    <section class="hero2"><div class="wrap">
+      <span class="tagpill glass">Free · For complete beginners</span>
+      <h1>The stock market, <em>made simple</em></h1>
+      <p class="lead">Short, friendly lessons and fun games that take you from “what is a share?” to understanding the Nigerian Exchange.</p>
+      <div class="ctas"><a class="btn btn-em" href="#/join">Start learning free <span class="chev">»</span></a><a class="btn btn-glass" href="#/signin">I have an account</a></div>
       <div class="stage" aria-hidden="true">
         <div class="iphone"><span class="btn-side b1"></span><span class="btn-side b2"></span><span class="btn-side b3"></span><span class="btn-side b4"></span>
           <div class="scr"><div class="island"></div>${phoneScreen(m)}</div></div>
@@ -123,32 +121,38 @@ function viewLanding(){
       </div>
     </div></section>
 
-    <section class="rows"><div class="wrap">
-      <div class="sec-h"><h2>Learning that feels <em>easy.</em></h2><p>No long videos. No confusing words. Just one small idea at a time, explained with things you already know.</p></div>
-      <div class="row">
-        <div><span class="eyebrow">Learn</span><h3>Five minutes a day is enough.</h3><p>Each lesson explains one idea with real Nigerian examples, like MTN, Dangote and your local market.</p></div>
-        <div class="row-art"><div class="art-card"><span class="eyebrow">Lesson 1</span><h4>What a share actually is</h4><p>Imagine you and four friends buy a shop together. Each of you owns one fifth.</p><div class="k"><b>Remember</b>A share is a small piece of a company. Own a piece, share in its success.</div></div></div>
-      </div>
-      <div class="row">
-        <div><span class="eyebrow">Practise</span><h3>Get it wrong? We show you why.</h3><p>A quick quiz after every lesson. If you miss one, you see the right answer and a simple explanation. Mini games are coming soon.</p></div>
-        <div class="row-art"><div class="art-card"><h4 style="font-size:20px">Can share prices go down?</h4><div class="art-opt w">No, never <span>✗</span></div><div class="art-opt r">Yes, and you can lose money <span>✓</span></div><p class="art-why">Shares carry risk. Prices move up and down with how the company and the economy are doing.</p></div></div>
-      </div>
-      <div class="row">
-        <div><span class="eyebrow">Follow</span><h3>See the real market, in simple words.</h3><p>A daily look at the Nigerian Exchange: what went up, what went down, and what it means for someone just starting.</p></div>
-        <div class="row-art"><div class="art-card"><small class="muted">NGX All-Share Index</small><div class="art-big">${fmt(m.asi)}</div><b class="${up?"up":"down"}">${up?"▲ +":"▼ "}${fmt(m.asiChg)}%</b>
-          ${(m.gainers||[]).slice(0,2).map(g=>`<div class="art-mv"><span><b>${esc(g.name)}</b></span><span class="up" style="font-weight:700">+${fmt(g.chg)}%</span></div>`).join("")}</div></div>
-      </div>
+    <section class="state"><div class="wrap">
+      <span class="tagpill soft">Learn at your own pace</span>
+      <h2>Understand money <em>before</em> you invest it</h2>
+      <p>Many people hear about shares from friends or social media and jump in blind. We help you learn the basics first, in plain English, so you can make your own decisions with confidence.</p>
+      <a class="btn" href="#/join">Start learning <span class="chev">»</span></a>
     </div></section>
 
+    <section class="wrap cards">
+      <div class="bigcard navy">
+        <div><span class="tagpill glass">Learn</span><h3>${LESSONS.length} bite-size lessons</h3><p>Five minutes each. One idea at a time, with real Nigerian examples like MTN, Dangote and your local market. A quick quiz after every lesson.</p><a class="btn btn-light" href="#/join">Take lesson 1 <span class="chev">»</span></a></div>
+        <div class="art"><div class="art-card"><small class="eyebrow">Lesson 1</small><h4>What a share actually is</h4><p>Imagine you and four friends buy a shop together. Each of you owns one fifth.</p><div class="k"><b>Remember</b>A share is a small piece of a company. Own a piece, share in its success.</div></div></div>
+      </div>
+      <div class="bigcard green">
+        <div><span class="tagpill glass">Play</span><h3>4 games to practise</h3><p>Guess where prices go, match market words, spot scams and build a pretend basket of companies. No real money, just points.</p><a class="btn btn-light" href="#/join">Play free <span class="chev">»</span></a></div>
+        <div class="art"><div class="games-mini">${Object.values(GM).map(g=>`<div><i style="color:${g.color}">${g.icon}</i><b>${g.title}</b><span>${g.time}</span></div>`).join("")}</div></div>
+      </div>
+      <div class="bigcard paper">
+        <div><span class="tagpill soft">Follow</span><h3>The real market, <em>in simple words</em></h3><p>A daily look at the Nigerian Exchange: what went up, what went down, and what it means for someone just starting.</p><a class="btn" href="#/join">See today's market <span class="chev">»</span></a></div>
+        <div class="art"><div class="art-card"><small class="muted">NGX All-Share Index</small><div class="art-big">${fmt(m.asi)}</div><b class="${up?"up":"down"}">${up?"▲ +":"▼ "}${fmt(m.asiChg)}%</b>
+          ${(m.gainers||[]).slice(0,2).map(g=>`<div class="art-mv"><span><b>${esc(g.name)}</b></span><span class="up" style="font-weight:700">+${fmt(g.chg)}%</span></div>`).join("")}</div></div>
+      </div>
+    </section>
+
     <section class="path"><div class="wrap">
-      <div class="sec-h"><h2>Start as a beginner. <em>Grow into a pro.</em></h2><p>The words get more professional only when you are ready for them.</p></div>
+      <div class="sec-c"><span class="tagpill soft">Your path</span><h2>Start as a beginner. <em>Grow into a pro.</em></h2><p>The words get more professional only when you are ready for them.</p></div>
       <div class="path-line">
         ${LEVELS.map(lv=>`<div class="lvl"><i style="background:${lv.color}">${lv.n}</i><h3>${lv.name}</h3><p>${lv.about}.</p><small>${lessonsOfLevel(lv).length} lessons</small></div>`).join("")}
       </div>
     </div></section>
 
     <section class="teaser"><div class="wrap">
-      <div><span class="eyebrow">Try it now</span><h2 style="margin-top:10px">One quick question.</h2><p>This is how every lesson ends. Pick an answer and see.</p></div>
+      <div class="sec-c"><span class="tagpill soft">Try it now</span><h2>One quick question</h2><p>This is how every lesson ends. Pick an answer and see.</p></div>
       <div class="tq">
         <p class="tq-q">If you buy a share of MTN, what do you get?</p>
         <div class="tq-opts" id="tq">
@@ -161,9 +165,9 @@ function viewLanding(){
     </div></section>
 
     <section class="band"><div class="wrap">
-      <h2>Your money journey starts <em>today.</em></h2>
+      <h2>Your money journey starts <em>today</em></h2>
       <p>Free to join. Your first lesson takes five minutes.</p>
-      <a class="btn btn-em" href="#/join">Create my free account</a>
+      <a class="btn btn-em" href="#/join">Create my free account <span class="chev">»</span></a>
     </div></section>
   </main>
   <footer class="foot"><div class="wrap"><span>© 2026 J.E.G Technologies, a division of Emedom Industries Limited. For learning only, not investment advice.</span>
@@ -362,7 +366,7 @@ function viewHome(){
   </section>
   <div class="tiles">
     <a class="tile" href="#/learn"><span class="ico" style="background:var(--gain-soft);color:var(--emerald-dark)">${I.learn}</span><b>Lessons</b><span>${n}/${total} done</span></a>
-    <a class="tile" href="#/play"><span class="soon">Soon</span><span class="ico" style="background:#E3E9EF;color:var(--navy)">${I.play}</span><b>Play</b><span>Learn with games</span></a>
+    <a class="tile" href="#/play"><span class="soon" style="background:var(--gain-soft);color:var(--emerald-dark)">New</span><span class="ico" style="background:#E3E9EF;color:var(--navy)">${I.play}</span><b>Play</b><span>${gamePoints()} game points</span></a>
     <a class="tile" href="#/market"><span class="ico" style="background:var(--sun-soft);color:#7a5a12">${I.market}</span><b>Market</b><span>Today's prices</span></a>
     <a class="tile" href="#/help"><span class="ico" style="background:#EDE9E0;color:var(--slate)">${I.help}</span><b>Help</b><span>Ask us anything</span></a>
   </div>
@@ -460,13 +464,24 @@ function confetti(){
     if(el<3200) requestAnimationFrame(f); else c.remove(); })(t0);
 }
 
-/* ---------- play (coming next) ---------- */
-function viewPlay(){
-  const games=[["Up or Down?","Guess where a share price goes next and learn why prices move.","var(--emerald)"],["Word Match","Match market words like ‘dividend’ to their simple meaning.","var(--navy-2)"],["Spot the Scam","Can you tell a real investment from a fake one? Protect your money.","var(--loss)"],["My First Basket","Pick 5 companies with play money and watch your basket grow.","#B07D12"]];
-  return `<div class="page-h"><span class="eyebrow">Play &amp; practise</span><h1>Games</h1><p class="muted">Learn the market by playing. No real money, just fun and points.</p></div>
-  <div class="tiles" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">${games.map(g=>`<div class="tile"><span class="soon">Coming soon</span><span class="ico" style="background:${g[2]};color:#fff">${I.play}</span><b>${g[0]}</b><span>${g[1]}</span></div>`).join("")}</div>
-  <div class="tip"><span style="font-size:22px">🎮</span><div><b>Games are on the way</b><p class="muted" style="margin-top:4px">Keep learning lessons for now. Your points will count in the games too.</p></div></div>`;
+/* ---------- play ---------- */
+function gameApi(id){
+  return { esc, fmt, confetti, LESSONS,
+    stats:()=>st.games[id]||{best:0,plays:0,pts:0},
+    award(score, extra){ const g=st.games[id]||{best:0,plays:0,pts:0}; g.plays=(g.plays||0)+1; g.pts=(g.pts||0)+score; g.best=Math.max(g.best||0,score); g.last=new Date().toISOString(); if(extra) Object.assign(g,extra); st.games[id]=g; persist(); const p=document.querySelector(".pts"); if(p) p.textContent=points()+" pts"; return g; },
+    back:()=>go("play"), replay:()=>render() };
 }
+function viewPlay(id){
+  const G=window.CMG_GAMES||{};
+  if(id && G[id]) return `<div class="game-top"><a class="back" href="#/play">← All games</a><span class="pts-chip">${gamePoints()} game pts</span></div><div id="game" class="game"></div>`;
+  const list=Object.entries(G);
+  return `<div class="page-h"><span class="eyebrow">Play &amp; practise</span><h1>Games</h1><p class="muted">Learn the market by playing. No real money, just fun and points.</p></div>
+  <div class="ghub-sum"><div><b>${gamePoints()}</b><span>game points</span></div><div><b>${Object.values(st.games).reduce((a,g)=>a+(g.plays||0),0)}</b><span>games played</span></div><div><b>${points()}</b><span>total points</span></div></div>
+  <div class="ghub">${list.map(([k,g])=>{ const s=st.games[k]; return `<a class="gcard" href="#/play/${k}" style="--gc:${g.color}">
+    <span class="gart">${g.icon}</span><div class="gtxt"><b>${g.title}</b><span>${g.blurb}</span><small>${g.time}${s&&s.plays?` · Best ${s.best} pts`:""}</small></div><span class="gplay">Play</span></a>`; }).join("")}</div>
+  <p class="muted" style="font-size:13px;margin-top:14px">Games use made-up companies and pretend results to teach you. They are not predictions or investment advice.</p>`;
+}
+function bindPlay(id){ const G=window.CMG_GAMES||{}; if(id&&G[id]){ const w=document.querySelector(".fab-wa"); if(w) w.remove(); G[id].run(document.getElementById("game"), gameApi(id)); } }
 
 /* ---------- market ---------- */
 function moverRows(a){ if(!a||!a.length) return `<tr><td colspan="3" class="muted">No data yet.</td></tr>`;
@@ -591,17 +606,17 @@ async function afterLogin(u, justSet, viaPin){
   st.profile=prof;
   if(!prof||!prof.passcodeSet||!prof.full_name) return go("passcode");
   st.isAdmin=!!ADMIN && (u.email||"").toLowerCase()===ADMIN;
-  try{ const s=await db.collection("progress").doc(u.uid).get(); const pr=s.exists?s.data():null; st.done=(pr&&pr.done)||{}; st.cur=(pr&&typeof pr.cur==="number")?pr.cur:0; }catch(e){ st.done={}; st.cur=0; }
+  try{ const s=await db.collection("progress").doc(u.uid).get(); const pr=s.exists?s.data():null; st.done=(pr&&pr.done)||{}; st.cur=(pr&&typeof pr.cur==="number")?pr.cur:0; st.games=(pr&&pr.games)||{}; }catch(e){ st.done={}; st.cur=0; st.games={}; }
   const seen=prof.storySeen||ls.get("cmg-seen-story-"+u.uid);
   if(!seen && doneCount()===0) return go("welcome/0");
   const r=route().p; if(["","join","signin","reset","verify","passcode"].includes(r)) go("home"); else render();
 }
-async function signOut(){ if(LIVE) await auth.signOut(); st.user=null; st.profile=null; st.done={}; st.cur=0; st.isAdmin=false; go(""); }
+async function signOut(){ if(LIVE) await auth.signOut(); st.user=null; st.profile=null; st.done={}; st.cur=0; st.games={}; st.isAdmin=false; go(""); }
 let saveT=null, saving=false, again=false;
 function persist(){
   clearTimeout(saveT);
   saveT=setTimeout(async()=>{ if(!LIVE||!st.user) return; if(saving){ again=true; return; } saving=true;
-    try{ await db.collection("progress").doc(st.user.uid).set({done:st.done, cur:st.cur, updatedAt:new Date().toISOString()}); }catch(e){ setTimeout(persist,8000); }
+    try{ await db.collection("progress").doc(st.user.uid).set({done:st.done, cur:st.cur, games:st.games, updatedAt:new Date().toISOString()}); }catch(e){ setTimeout(persist,8000); }
     saving=false; if(again){ again=false; persist(); } const p=$(".pts"); if(p) p.textContent=points()+" pts"; },400);
 }
 
