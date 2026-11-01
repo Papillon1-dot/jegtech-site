@@ -79,47 +79,76 @@ async function render(){
 
 /* ---------- public: landing ---------- */
 function topbar(){ return `<header class="topbar" id="tb"><div class="wrap"><a class="lockup" href="#/">${MARK}<span><b>Capital Market Guide</b><small>by J.E.G Technologies</small></span></a>
-  <nav><a class="btn btn-ghost btn-sm" href="#/signin">Sign in</a><a class="btn btn-em btn-sm" href="#/join">Start free</a></nav></div></header>`; }
+  <nav><a class="txtlink" href="#/signin">Sign in</a><a class="btn btn-sm" href="#/join">Get started</a></nav></div></header>`; }
+const SB_ICONS = `<span class="ic"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx=".8" fill="#0B1F33"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8" fill="#0B1F33"/><rect x="10" y="3" width="3" height="9" rx=".8" fill="#0B1F33"/><rect x="15" y="0" width="3" height="12" rx=".8" fill="#0B1F33"/></svg><svg viewBox="0 0 16 12"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0zM3.4 6.8a6.5 6.5 0 0 1 9.2 0L11.2 8.2a4.5 4.5 0 0 0-6.4 0zM1.2 4.6a9.6 9.6 0 0 1 13.6 0L13.4 6a7.6 7.6 0 0 0-10.8 0z" fill="#0B1F33"/></svg><svg viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="#0B1F33" opacity=".4"/><rect x="2" y="2" width="17" height="9" rx="2" fill="#0B1F33"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="#0B1F33" opacity=".4"/></svg></span>`;
+function phoneScreen(m){
+  const up=Number(m.asiChg)>=0, C=2*Math.PI*31;
+  return `<div class="scr-in">
+    <div class="sb"><span>9:41</span>${SB_ICONS}</div>
+    <div class="ps">
+      <div class="ps-top"><div><small>Good morning,</small><b>Goodnews</b></div><span class="ps-pts">60 pts</span></div>
+      <div class="ps-cont"><div><small>Level 1 · Starter</small><h4>Why companies sell shares</h4><span class="go">Continue</span></div>
+        <svg class="ps-ring" viewBox="0 0 78 78"><circle cx="39" cy="39" r="31" stroke="#1C3D5C"/><circle cx="39" cy="39" r="31" stroke="#2BC48F" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*.78}" transform="rotate(-90 39 39)"/><text x="39" y="45" text-anchor="middle" fill="#F6F4EE" font-size="17" font-weight="700" font-family="Hanken Grotesk">22%</text></svg></div>
+      <div class="ps-grid">
+        <div class="ps-tile"><i style="background:var(--gain-soft);color:var(--emerald-dark)">${I.learn}</i><b>Lessons</b><span>2 of ${LESSONS.length} done</span></div>
+        <div class="ps-tile"><i style="background:#E3E9EF;color:var(--navy)">${I.play}</i><b>Play</b><span>Learn with games</span></div>
+      </div>
+      <div class="ps-mkt"><div><small>NGX All-Share</small><b>${fmt(m.asi)}</b><small class="${up?"up":"down"}" style="font-weight:700">${up?"▲ +":"▼ "}${fmt(m.asiChg)}% today</small></div>
+        <svg class="spark" viewBox="0 0 110 40"><path d="M2 32 L14 28 L24 30 L36 22 L48 24 L58 16 L70 19 L82 11 L94 13 L108 5" fill="none" stroke="${up?"#12A67A":"#B4372A"}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="ps-tab"><span class="on">${I.home}Home</span><span>${I.learn}Learn</span><span>${I.play}Play</span><span>${I.market}Market</span></div>
+  </div>`;
+}
 function viewLanding(){
   const m=st.market||SEED_MARKET, up=Number(m.asiChg)>=0;
+  const appIcon=MARK.replace(/stroke="currentColor"/g,'stroke="#F6F4EE"');
   root.innerHTML = `<div class="screen">${topbar()}
   <main>
     <section class="hero"><div class="wrap hero-grid">
       <div>
-        <span class="eyebrow">Free · For complete beginners</span>
-        <h1 style="margin-top:14px">The stock market, <span class="em">made simple.</span></h1>
-        <p class="lead">Learn how shares work in short, friendly lessons. No big English, no stress. Start from zero and grow at your own pace.</p>
-        <div class="ctas"><a class="btn btn-em" href="#/join">Start learning, it's free</a><a class="btn btn-line" href="#/signin">I have an account</a></div>
-        <div class="trust"><span><i>${I.check}</i>5-minute lessons</span><span><i>${I.check}</i>Learn on your phone</span><span><i>${I.check}</i>No money needed to learn</span></div>
+        <h1>The stock market, <em>made simple.</em></h1>
+        <p class="lead">Short, friendly lessons that take you from “what is a share?” to understanding the Nigerian Exchange. Plain English. At your own pace.</p>
+        <div class="ctas"><a class="btn btn-em" href="#/join">Start learning free</a><a class="arrowlink" href="#/signin">I have an account <span>→</span></a></div>
+        <div class="facts">
+          <div><b>${LESSONS.length}</b><span>bite-size lessons</span></div>
+          <div><b>3</b><span>levels, beginner to pro</span></div>
+          <div><b>₦0</b><span>to learn, always</span></div>
+        </div>
       </div>
-      <div class="mock" aria-hidden="true">
-        <div class="mock-phone"><div class="mock-screen">
-          <div class="mock-top"><span>Good morning</span><span class="fig">60 pts</span></div>
-          <div class="mock-hi">Hi Goodnews,</div>
-          <div class="mock-card"><span class="tag">Continue · Lesson 2</span><b>Why companies sell shares</b><div class="mock-bar"><i></i></div></div>
-          <div class="mock-row">
-            <div class="mock-tile"><span class="dot" style="background:var(--emerald)">${I.learn.replace('stroke="currentColor"','stroke="#fff"')}</span>Lessons</div>
-            <div class="mock-tile"><span class="dot" style="background:var(--navy)">${I.play.replace('stroke="currentColor"','stroke="#fff"')}</span>Play</div>
-          </div>
-          <div class="mock-card"><span class="tag">Today's market</span><b class="fig">${fmt(m.asi)}</b><span class="fig ${up?"up":"down"}" style="font-size:13px">${up?"▲ +":"▼ "}${fmt(m.asiChg)}%</span></div>
-        </div></div>
-        <div class="mock-badge">🎉 Lesson complete!</div>
-        <div class="mock-badge2"><span style="font-size:12px;color:var(--mist)">You earned</span><b>+30 points</b></div>
+      <div class="stage" aria-hidden="true">
+        <div class="iphone"><span class="btn-side b1"></span><span class="btn-side b2"></span><span class="btn-side b3"></span><span class="btn-side b4"></span>
+          <div class="scr"><div class="island"></div>${phoneScreen(m)}</div></div>
+        <div class="note n1"><span class="app">${appIcon}</span><div><b>Lesson 2 unlocked</b><span>You scored 3/3. Nice work!</span></div><span class="t">now</span></div>
+        <div class="note n2"><span class="app">${appIcon}</span><div><b>Market closed ${up?"higher":"lower"}</b><span>All-Share ${up?"+":""}${fmt(m.asiChg)}%. Tap to see why.</span></div><span class="t">2m</span></div>
       </div>
     </div></section>
 
-    <section class="why"><div class="wrap">
-      <h2>Everything you need to start</h2>
-      <p class="sub">Three simple parts. Learn, practise, then watch the real market.</p>
-      <div class="why-grid">
-        <div class="why-card"><span class="why-ico" style="background:var(--gain-soft);color:var(--emerald-dark)">${I.learn}</span><h3>Learn step by step</h3><p>Short lessons with real Nigerian examples. A quick quiz after each one helps it stick.</p></div>
-        <div class="why-card"><span class="why-ico" style="background:#E3E9EF;color:var(--navy)">${I.play}</span><h3>Play and practise</h3><p>Fun mini games that teach you how the market moves, without risking a kobo.</p></div>
-        <div class="why-card"><span class="why-ico" style="background:var(--sun-soft);color:#7a5a12">${I.market}</span><h3>See the real market</h3><p>Follow what happens on the Nigerian Exchange, explained in simple words.</p></div>
+    <section class="rows"><div class="wrap">
+      <div class="sec-h"><h2>Learning that feels <em>easy.</em></h2><p>No long videos. No confusing words. Just one small idea at a time, explained with things you already know.</p></div>
+      <div class="row">
+        <div><span class="eyebrow">Learn</span><h3>Five minutes a day is enough.</h3><p>Each lesson explains one idea with real Nigerian examples, like MTN, Dangote and your local market.</p></div>
+        <div class="row-art"><div class="art-card"><span class="eyebrow">Lesson 1</span><h4>What a share actually is</h4><p>Imagine you and four friends buy a shop together. Each of you owns one fifth.</p><div class="k"><b>Remember</b>A share is a small piece of a company. Own a piece, share in its success.</div></div></div>
+      </div>
+      <div class="row">
+        <div><span class="eyebrow">Practise</span><h3>Get it wrong? We show you why.</h3><p>A quick quiz after every lesson. If you miss one, you see the right answer and a simple explanation. Mini games are coming soon.</p></div>
+        <div class="row-art"><div class="art-card"><h4 style="font-size:20px">Can share prices go down?</h4><div class="art-opt w">No, never <span>✗</span></div><div class="art-opt r">Yes, and you can lose money <span>✓</span></div><p class="art-why">Shares carry risk. Prices move up and down with how the company and the economy are doing.</p></div></div>
+      </div>
+      <div class="row">
+        <div><span class="eyebrow">Follow</span><h3>See the real market, in simple words.</h3><p>A daily look at the Nigerian Exchange: what went up, what went down, and what it means for someone just starting.</p></div>
+        <div class="row-art"><div class="art-card"><small class="muted">NGX All-Share Index</small><div class="art-big">${fmt(m.asi)}</div><b class="${up?"up":"down"}">${up?"▲ +":"▼ "}${fmt(m.asiChg)}%</b>
+          ${(m.gainers||[]).slice(0,2).map(g=>`<div class="art-mv"><span><b>${esc(g.name)}</b></span><span class="up" style="font-weight:700">+${fmt(g.chg)}%</span></div>`).join("")}</div></div>
+      </div>
+    </div></section>
+
+    <section class="path"><div class="wrap">
+      <div class="sec-h"><h2>Start as a beginner. <em>Grow into a pro.</em></h2><p>The words get more professional only when you are ready for them.</p></div>
+      <div class="path-line">
+        ${LEVELS.map(lv=>`<div class="lvl"><i style="background:${lv.color}">${lv.n}</i><h3>${lv.name}</h3><p>${lv.about}.</p><small>${lessonsOfLevel(lv).length} lessons</small></div>`).join("")}
       </div>
     </div></section>
 
     <section class="teaser"><div class="wrap">
-      <h2>Try one quick question</h2>
+      <div><span class="eyebrow">Try it now</span><h2 style="margin-top:10px">One quick question.</h2><p>This is how every lesson ends. Pick an answer and see.</p></div>
       <div class="tq">
         <p class="tq-q">If you buy a share of MTN, what do you get?</p>
         <div class="tq-opts" id="tq">
@@ -131,12 +160,14 @@ function viewLanding(){
       </div>
     </div></section>
 
-    <section class="band on-navy"><div class="wrap">
-      <div><h2>Your first lesson takes 5 minutes.</h2><p>Free to join. Learn at your own pace.</p></div>
+    <section class="band"><div class="wrap">
+      <h2>Your money journey starts <em>today.</em></h2>
+      <p>Free to join. Your first lesson takes five minutes.</p>
       <a class="btn btn-em" href="#/join">Create my free account</a>
     </div></section>
   </main>
-  <footer class="foot"><div class="wrap"><span>© 2026 J.E.G Technologies, a division of Emedom Industries Limited. For learning only, not investment advice.</span><a href="${WA_LINK}" target="_blank" rel="noopener">WhatsApp ${esc(WA)}</a></div></footer>
+  <footer class="foot"><div class="wrap"><span>© 2026 J.E.G Technologies, a division of Emedom Industries Limited. For learning only, not investment advice.</span>
+    <nav><a href="/">J.E.G Technologies</a><a href="https://aicfo.jegtech.com.ng">AI CFO</a><a href="${WA_LINK}" target="_blank" rel="noopener">WhatsApp ${esc(WA)}</a></nav></div></footer>
   <a class="fab-wa home-wa" href="${WA_LINK}" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">${I.wa}</a>
   </div>`;
   const tb=$("#tb"); const onS=()=>tb&&tb.classList.toggle("scrolled",scrollY>8); addEventListener("scroll",onS,{passive:true}); onS();
@@ -144,7 +175,7 @@ function viewLanding(){
     document.querySelectorAll("#tq button").forEach(x=>{x.classList.remove("right","wrong"); if(x.dataset.ok==="1") x.classList.add("right");});
     if(b.dataset.ok!=="1") b.classList.add("wrong");
     const fb=$("#tqfb"); fb.hidden=false;
-    fb.innerHTML = (b.dataset.ok==="1"?'<b class="up">You got it!</b> ':'<b class="down">Not quite.</b> ')+"A share is a small piece of a company. If the company does well, your piece can grow in value. That's lesson 1. <a class='linkish' href='#/join'>Start free</a>";
+    fb.innerHTML = (b.dataset.ok==="1"?'<b class="up">You got it.</b> ':'<b class="down">Not quite.</b> ')+"A share is a small piece of a company. If the company does well, your piece can grow in value. That's lesson 1. <a class='linkish' href='#/join'>Start free</a>";
   });
 }
 
